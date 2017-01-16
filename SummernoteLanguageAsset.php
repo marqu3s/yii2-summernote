@@ -21,7 +21,7 @@ class SummernoteLanguageAsset extends AssetBundle
      */
     public function registerAssetFiles($view)
     {
-        $this->js[] = 'summernote-' . $this->language . '.js';
+        $this->js[] = 'summernote-' . str_replace('_', '-' , $this->language) . '.js';
         parent::registerAssetFiles($view);
     }
 }
