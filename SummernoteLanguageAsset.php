@@ -10,11 +10,9 @@ class SummernoteLanguageAsset extends AssetBundle
     /** @var string */
     public $language;
     /** @var string */
-    public $sourcePath = '@bower/summernote/lang';
+    public $sourcePath = '@bower/summernote/dist/lang';
     /** @var array */
-    public $depends = [
-        'marqu3s\summernote\SummernoteAsset'
-    ];
+    public $depends = ['marqu3s\summernote\SummernoteAsset'];
 
     /**
      * @inheritdoc
