@@ -61,7 +61,6 @@ class Summernote extends InputWidget
     /** @var string An expiration date in ISO8601 format (YYYYMMDD'T'HHMMSS'Z'). After this date the POST request will fail. */
     public $expiration;
 
-
     /**
      * @inheritdoc
      */
@@ -70,19 +69,27 @@ class Summernote extends InputWidget
         # Validate attributes required to upload images do S3.
         if ($this->uploadToS3) {
             if (empty($this->signEndpoint)) {
-                throw new InvalidConfigException('The "signEndpoint" attribute must be set because "uploadToS3" is set to true.');
+                throw new InvalidConfigException(
+                    'The "signEndpoint" attribute must be set because "uploadToS3" is set to true.'
+                );
             }
 
             if (empty($this->bucket)) {
-                throw new InvalidConfigException('The "bucket" attribute must be set because "uploadToS3" is set to true.');
+                throw new InvalidConfigException(
+                    'The "bucket" attribute must be set because "uploadToS3" is set to true.'
+                );
             }
 
             if (empty($this->maxFileSize)) {
-                throw new InvalidConfigException('The "maxFileSize" attribute must be set because "uploadToS3" is set to true.');
+                throw new InvalidConfigException(
+                    'The "maxFileSize" attribute must be set because "uploadToS3" is set to true.'
+                );
             }
 
             if (empty($this->expiration)) {
-                throw new InvalidConfigException('The "expiration" attribute must be set because "uploadToS3" is set to true.');
+                throw new InvalidConfigException(
+                    'The "expiration" attribute must be set because "uploadToS3" is set to true.'
+                );
             }
         }
 
@@ -103,7 +110,9 @@ class Summernote extends InputWidget
             ? Html::activeTextarea($this->model, $this->attribute, $this->options)
             : Html::textarea($this->name, $this->value, $this->options);
 
-        if (empty($this->folder)) $this->folder = "''";
+        if (empty($this->folder)) {
+            $this->folder = "''";
+        }
 
         # If uploadToS3 is true, create the onImageUpload callback.
         if ($this->uploadToS3) {
@@ -114,7 +123,7 @@ class Summernote extends InputWidget
             $this->clientOptions['callbacks']['onImageUpload'] = "function(files) {
                 // get current editable container
                 var editor = $(this);
-                
+
                 // set properties of the summernote S3 uploader.
                 summernoteS3uploader.signEndpoint = '{$this->signEndpoint}';
                 summernoteS3uploader.bucket = '{$this->bucket}';
@@ -132,17 +141,21 @@ class Summernote extends InputWidget
         $buttons = $this->getExtendsParams('buttons');
         $modules = $this->getExtendsParams('modules');
 
-        $clientOptions = empty($this->clientOptions)
-            ? null
-            : Json::encode($this->clientOptions);
+        $clientOptions = empty($this->clientOptions) ? null : Json::encode($this->clientOptions);
 
-        $this->getView()->registerJs('
-            var params = ' . $clientOptions . ';'
-            . (empty($callbacks) ? '' : 'params.callbacks = { ' . $callbacks . ' };')
-            . (empty($buttons) ? '' : 'params.buttons = { ' . $buttons . ' };')
-            . (empty($modules) ? '' : 'params.modules = { ' . $modules . ' };')
-            . 'jQuery( "#' . $this->options['id'] . '" ).summernote(params);
-        ');
+        $this->getView()->registerJs(
+            '
+            var params = ' .
+                $clientOptions .
+                ';' .
+                (empty($callbacks) ? '' : 'params.callbacks = { ' . $callbacks . ' };') .
+                (empty($buttons) ? '' : 'params.buttons = { ' . $buttons . ' };') .
+                (empty($modules) ? '' : 'params.modules = { ' . $modules . ' };') .
+                'jQuery( "#' .
+                $this->options['id'] .
+                '" ).summernote(params);
+        '
+        );
     }
 
     private function registerAssets()
@@ -154,6 +167,7 @@ class Summernote extends InputWidget
         }
 
         SummernoteAsset::register($view);
+        SummernoteFixBS3ButtonsAsset::register($view);
 
         if ($this->uploadToS3) {
             SummernoteS3Asset::register($view);
@@ -173,5 +187,4 @@ class Summernote extends InputWidget
 
         return $result;
     }
-
 }
