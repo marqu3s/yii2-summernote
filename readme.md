@@ -1,4 +1,4 @@
-# Yii2 Summernote widget. Summernote 0.8.0
+# Yii2 Summernote widget. Summernote 0.9.1
 
 [Yii2](http://www.yiiframework.com) [Summernote](http://hackerwins.github.io/summernote) widget. Super simple WYSIWYG editor on Bootstrap
 
@@ -10,52 +10,62 @@ The preferred way to install this extension is through [Composer](http://getcomp
 
 Either run
 
-	php composer.phar require marqu3s/yii2-summernote "dev-master"
+```shell
+composer require marqu3s/yii2-summernote
+```
 
 or add
 
-	"marqu3s/yii2-summernote": "dev-master"
+```json
+"marqu3s/yii2-summernote": "dev-master"
+```
 
 to the require section of your composer.json
 
 ## Usage
 
-	<?= $form->field($model, 'content')->widget(Summernote::className(), [
-        'clientOptions' => [
-            ...
-        ]
-	]); ?>
+```php
+<?= $form->field($model, 'content')->widget(Summernote::className(), [
+    'clientOptions' => [
+        ...
+    ]
+]); ?>
+```
 
 or
 
-	<?= Summernote::widget([
-        'name' => 'editor_id',
-        'clientOptions' => [
-            ...
-        ]
-	]); ?>
+```php
+<?= Summernote::widget([
+    'name' => 'editor_id',
+    'clientOptions' => [
+        ...
+    ]
+]); ?>
+```
 
 ### Uploading directly to Amazon S3
 
 To upload images inserted into the editor to S3, you have to configure a few options.
 
-	<?= Summernote::widget([
-        'uploadToS3' => true,
-        'signEndpoint' => '/<controller>/sign-aws-request?v4=true',
-        'bucket' => 'S3-BUCKET-NAME',
-        //'folder' => '',
-        'folder' => new \yii\web\JsExpression("function() { return $('#aFormFieldId').val() + '/'; }"),
-        'filenamePrefix' => "'{$model->id}-'",
-        'maxFileSize' => 1024000,
-        'expiration' => gmdate('Y-m-d\TH:i:s.000\Z', strtotime('+5 minutes')),
-        'clientOptions' => [
-            ...
-        ]
-	]); ?>
-	
+```php
+<?= Summernote::widget([
+    'uploadToS3' => true,
+    'signEndpoint' => '/<controller>/sign-aws-request?v4=true',
+    'bucket' => 'S3-BUCKET-NAME',
+    //'folder' => '',
+    'folder' => new \yii\web\JsExpression("function() { return $('#aFormFieldId').val() + '/'; }"),
+    'filenamePrefix' => "'{$model->id}-'",
+    'maxFileSize' => 1024000,
+    'expiration' => gmdate('Y-m-d\TH:i:s.000\Z', strtotime('+5 minutes')),
+    'clientOptions' => [
+        ...
+    ]
+]); ?>
+```
+
 Then, in your controller, configure an action as the signEndpoint to sign the POST request that will upload the image.
 
-```
+```php
 public function actions()
 {
    return [
