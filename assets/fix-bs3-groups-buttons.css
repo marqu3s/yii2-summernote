@@ -1,0 +1,6 @@
+.note-editor .note-toolbar .note-btn-group.btn-group {
+  float: none;
+}
+.note-dropdown-menu.dropdown-menu {
+  min-width: 215px !important;
+}
