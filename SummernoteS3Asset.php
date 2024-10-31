@@ -2,15 +2,12 @@
 
 namespace marqu3s\summernote;
 
-use Yii;
 use yii\web\AssetBundle;
 
 class SummernoteS3Asset extends AssetBundle
 {
     /** @var string */
     public $sourcePath = '@vendor/marqu3s/yii2-summernote/assets';
-
-
 
     /**
      * @inheritdoc
