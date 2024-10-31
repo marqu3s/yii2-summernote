@@ -7,32 +7,34 @@ use yii\web\AssetBundle;
 
 class SummernoteAsset extends AssetBundle
 {
-    /** @var string */
-    public $sourcePath = '@bower/summernote/dist';
+    public $baseUrl = 'https://cdn.jsdelivr.net/npm/summernote@0.9.1/dist/';
+
     /** @var array */
-    public $depends = [
-        'yii\bootstrap\BootstrapPluginAsset',
-    ];
+    public $depends = ['yii\bootstrap\BootstrapPluginAsset'];
 
     /**
      * @inheritdoc
      */
     public function init()
     {
-        $postfix = YII_DEBUG ? '' : '.min';
-
-        if (isset(Yii::$app->params['bsVersion']) && substr(Yii::$app->params['bsVersion'], 0, 1) == '5') {
+        if (
+            isset(Yii::$app->params['bsVersion']) &&
+            substr(Yii::$app->params['bsVersion'], 0, 1) == '5'
+        ) {
             $this->depends = ['yii\bootstrap5\BootstrapPluginAsset'];
-            $this->css[] = 'summernote-bs5' . $postfix . '.css';
-            $this->js[] = 'summernote-bs5' . $postfix . '.js';
-        } elseif (isset(Yii::$app->params['bsVersion']) && substr(Yii::$app->params['bsVersion'], 0, 1) == '4') {
+            $this->css[] = 'summernote-bs5.min.css';
+            $this->js[] = 'summernote-bs5.min.js';
+        } elseif (
+            isset(Yii::$app->params['bsVersion']) &&
+            substr(Yii::$app->params['bsVersion'], 0, 1) == '4'
+        ) {
             $this->depends = ['yii\bootstrap4\BootstrapPluginAsset'];
-            $this->css[] = 'summernote-bs4' . $postfix . '.css';
-            $this->js[] = 'summernote-bs4' . $postfix . '.js';
+            $this->css[] = 'summernote-bs4.min.css';
+            $this->js[] = 'summernote-bs4.min.js';
         } else {
             $this->depends = ['yii\bootstrap\BootstrapPluginAsset'];
-            $this->css[] = 'summernote.css';
-            $this->js[] = 'summernote' . $postfix . '.js';
+            $this->css[] = 'summernote.min.css';
+            $this->js[] = 'summernote.min.js';
         }
 
         parent::init();
