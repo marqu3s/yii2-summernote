@@ -38,6 +38,11 @@
             "marqu3s\\summernote\\": ""
         }
     },
+    "config": {
+        "preferred-install": {
+            "bower-asset/summernote": "dist"
+        }
+    },
     "extra": {
         "asset-installer-paths": {
             "npm-asset-library": "vendor/npm",
